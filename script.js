@@ -1,6 +1,8 @@
-// Scroll reveal functionality
+// ========================================================
+// 1. Scroll Reveal Functionality
+// ========================================================
 const reveals = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver((entries) => {
+const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
         if (e.isIntersecting) {
             setTimeout(() => e.target.classList.add('visible'), i * 80);
@@ -8,23 +10,61 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.12 });
 
-reveals.forEach(el => observer.observe(el));
+reveals.forEach(el => revealObserver.observe(el));
 
-// Smooth active nav link highlight
+
+// ========================================================
+// 2. FIXED: Active Nav Link Highlight (Click + Scroll Combined)
+// ========================================================
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 
-window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => { 
-        if (window.scrollY >= s.offsetTop - 120) current = s.id; 
-    });
+// Highlight badalne ka main function
+function changeActiveLink(currentId) {
     navLinks.forEach(a => {
-        a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
+        if (a.getAttribute('href') === '#' + currentId) {
+            a.style.color = 'var(--accent)';
+        } else {
+            a.style.color = '';
+        }
+    });
+}
+
+// A: Jab kisi link par CLICK ho, to foran usay highlight karein (Zabardasti)
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const targetId = link.getAttribute('href').replace('#', '');
+        changeActiveLink(targetId);
     });
 });
 
-// Mobile Hamburger Menu Functionality
+// B: Agar user mouse se SCROLL kare, to position ke mutabiq highlight karein
+window.addEventListener('scroll', () => {
+    let current = '';
+    
+    // Check karein ke kya user page ke bilkul bottom par hai
+    const isAtBottom = (window.innerHeight + window.scrollY) >= (document.documentElement.scrollHeight - 50);
+
+    if (isAtBottom) {
+        current = 'contact';
+    } else {
+        sections.forEach(s => { 
+            if (window.scrollY >= s.offsetTop - 150) { 
+                current = s.id; 
+            }
+        });
+    }
+
+    // Agar user manual scroll kar raha hai tabhi yeh chalega
+    if (current) {
+        changeActiveLink(current);
+    }
+});
+
+
+// ========================================================
+// 3. Mobile Hamburger Menu Functionality
+// ========================================================
 const hamburgerBtn = document.getElementById('hamburger-btn');
 const navLinksContainer = document.getElementById('nav-links');
 
