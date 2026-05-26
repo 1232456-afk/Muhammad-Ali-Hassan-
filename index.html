@@ -1,485 +1,134 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Muhammad Ali Hassan</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
-     <style>
-          :root {
-      --bg: #050a14;
-      --surface: #0d1626;
-      --accent: #00d4ff;
-      --accent2: #7b5ea7;
-      --gold: #f0c040;
-      --text: #e8eaf0;
-      --muted: #7a8599;
-    }
-
-    *, *::before, *::after { box-siz
-    html { scroll-behavior: smooth;ing: border-box; margin: 0; padding: 0; }
- }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      overflow-x: hidden;
-    }
-
-    /* ── Animated starfield background ── */
-    #stars {
-      position: fixed; inset: 0; z-index: 0;
-      background: radial-gradient(ellipse at 20% 30%, #0a1a35 0%, transparent 60%),
-                  radial-gradient(ellipse at 80% 70%, #1a0a30 0%, transparent 60%),
-                  var(--bg);
-      pointer-events: none;
-    }
-    #stars::before, #stars::after {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 30% 50%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(1px 1px at 60% 15%, rgba(255,255,255,0.5) 0%, transparent 100%),
-        radial-gradient(1px 1px at 80% 80%, rgba(255,255,255,0.3) 0%, transparent 100%),
-        radial-gradient(1px 1px at 50% 70%, rgba(255,255,255,0.6) 0%, transparent 100%),
-        radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 15% 65%, rgba(0,212,255,0.4) 0%, transparent 100%),
-        radial-gradient(1.5px 1.5px at 85% 25%, rgba(0,212,255,0.3) 0%, transparent 100%);
-      background-size: 800px 800px;
-      animation: twinkle 8s linear infinite alternate;
-    }
-    #stars::after {
-      background-size: 600px 600px;
-      animation-duration: 12s;
-      animation-direction: alternate-reverse;
-    }
-    @keyframes twinkle {
-      from { opacity: 0.4; transform: scale(1); }
-      to   { opacity: 1;   transform: scale(1.02); }
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 1.2rem 4rem;
-      background: rgba(5,10,20,0.7);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(0,212,255,0.08);
-    }
-    .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem; font-weight: 900;
-      color: var(--accent);
-      letter-spacing: 0.04em;
-    }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a {
-      color: var(--muted); text-decoration: none;
-      font-size: 0.85rem; letter-spacing: 0.1em; text-transform: uppercase;
-      transition: color 0.3s;
-    }
-    .nav-links a:hover { color: var(--accent); }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative; z-index: 1;
-      min-height: 100vh;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center;
-      padding: 6rem 2rem 4rem;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 0.5rem;
-      background: rgba(0,212,255,0.08);
-      border: 1px solid rgba(0,212,255,0.25);
-      border-radius: 100px;
-      padding: 0.4rem 1.2rem;
-      font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 2rem;
-      animation: fadeDown 0.8s ease both;
-    }
-    .hero-badge span { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(1.5)} }
-
-    .hero-name {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 8vw, 7rem);
-      font-weight: 900;
-      line-height: 1.05;
-      margin-bottom: 0.3rem;
-      animation: fadeUp 1s ease 0.2s both;
-    }
-    .hero-name .line1 { color: var(--text); display: block; }
-    .hero-name .line2 {
-      display: block;
-      background: linear-gradient(135deg, var(--accent), var(--accent2), var(--gold));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-
-    .hero-title {
-      font-size: 1rem; letter-spacing: 0.25em; text-transform: uppercase;
-      color: var(--muted); margin: 1.5rem 0 2.5rem;
-      animation: fadeUp 1s ease 0.4s both;
-    }
-
-    .hero-cta {
-      display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
-      animation: fadeUp 1s ease 0.6s both;
-    }
-    .btn {
-      padding: 0.75rem 2rem; border-radius: 100px;
-      font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase;
-      font-weight: 500; cursor: pointer; border: none; text-decoration: none;
-      transition: all 0.3s;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: #fff;
-      box-shadow: 0 0 30px rgba(0,212,255,0.25);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,212,255,0.4); }
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.15);
-    }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-
-    .scroll-hint {
-      position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
-      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
-      color: var(--muted); font-size: 0.75rem; letter-spacing: 0.1em;
-      animation: fadeUp 1s ease 1s both;
-    }
-    .scroll-line {
-      width: 1px; height: 50px;
-      background: linear-gradient(to bottom, var(--accent), transparent);
-      animation: scrollDown 2s ease-in-out infinite;
-    }
-    @keyframes scrollDown { 0%,100%{opacity:0;transform:scaleY(0.3) translateY(-10px)} 50%{opacity:1;transform:scaleY(1) translateY(0)} }
-
-    /* ── SECTIONS ── */
-    section { position: relative; z-index: 1; }
-
-    .section-inner {
-      max-width: 1100px; margin: 0 auto;
-      padding: 7rem 2rem;
-    }
-
-    .section-label {
-      font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--accent); margin-bottom: 0.75rem;
-    }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700; line-height: 1.15;
-      margin-bottom: 2rem;
-    }
-
-    /* ── ABOUT ── */
-    .about-grid {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
-      align-items: center;
-    }
-    .about-img-wrap {
-      position: relative;
-    }
-    .avatar-placeholder {
-      width: 100%; aspect-ratio: 1;
-      border-radius: 24px;
-      background: linear-gradient(135deg, #0d2040, #1a0d35);
-      border: 1px solid rgba(0,212,255,0.15);
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
-      gap: 1rem;
-      font-family: 'Playfair Display', serif;
-      position: relative; overflow: hidden;
-    }
-    .avatar-placeholder::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(circle at 50% 40%, rgba(0,212,255,0.08), transparent 70%);
-    }
-    .avatar-initials {
-      font-size: 5rem; font-weight: 900;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      line-height: 1;
-    }
-    .avatar-name-small { color: var(--muted); font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: 'DM Sans', sans-serif; }
-    .avatar-glow {
-      position: absolute; top: -30px; right: -30px;
-      width: 150px; height: 150px;
-      background: radial-gradient(circle, rgba(0,212,255,0.15) 0%, transparent 70%);
-      border-radius: 50%;
-    }
-
-    .about-text p {
-      color: var(--muted); line-height: 1.85; font-size: 1rem;
-      margin-bottom: 1.25rem;
-    }
-    .about-text strong { color: var(--text); }
-
-    .stats-row {
-      display: flex; gap: 2rem; margin-top: 2.5rem; flex-wrap: wrap;
-    }
-    .stat { text-align: center; }
-    .stat-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 2rem; font-weight: 900;
-      background: linear-gradient(135deg, var(--accent), var(--gold));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .stat-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 0.25rem; }
-
-    /* ── SUBJECTS / SKILLS ── */
-    .subjects-bg {
-      background: linear-gradient(180deg, transparent, rgba(0,212,255,0.03), transparent);
-    }
-    .cards-grid {
-      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem;
-    }
-    .card {
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 20px;
-      padding: 2rem;
-      transition: all 0.35s;
-      position: relative; overflow: hidden;
-    }
-    .card::before {
-      content: '';
-      position: absolute; top: 0; left: 0; right: 0; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2), transparent);
-      opacity: 0; transition: opacity 0.35s;
-    }
-    .card:hover { transform: translateY(-6px); border-color: rgba(0,212,255,0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.4); }
-    .card:hover::before { opacity: 1; }
-    .card-icon { font-size: 2.2rem; margin-bottom: 1rem; }
-    .card-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 700; margin-bottom: 0.5rem; }
-    .card-desc { color: var(--muted); font-size: 0.88rem; line-height: 1.7; }
-
-    /* ── GOALS ── */
-    .goals-list { list-style: none; display: flex; flex-direction: column; gap: 1.25rem; max-width: 700px; }
-    .goals-list li {
-      display: flex; align-items: flex-start; gap: 1.25rem;
-      padding: 1.5rem 1.75rem;
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.05);
-      border-radius: 16px;
-      transition: all 0.3s;
-    }
-    .goals-list li:hover { border-color: rgba(0,212,255,0.2); transform: translateX(6px); }
-    .goal-num {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 900;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      flex-shrink: 0; line-height: 1;
-    }
-    .goal-text strong { display: block; margin-bottom: 0.25rem; font-size: 0.95rem; }
-    .goal-text span { color: var(--muted); font-size: 0.85rem; line-height: 1.6; }
-
-    /* ── CONTACT ── */
-    .contact-wrap {
-      text-align: center; max-width: 600px; margin: 0 auto;
-    }
-    .contact-wrap p { color: var(--muted); line-height: 1.8; margin-bottom: 2.5rem; }
-    .contact-links {
-      display: flex; justify-content: center; gap: 1.25rem; flex-wrap: wrap;
-    }
-    .contact-chip {
-      display: inline-flex; align-items: center; gap: 0.6rem;
-      background: var(--surface);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 100px; padding: 0.6rem 1.5rem;
-      color: var(--text); text-decoration: none; font-size: 0.85rem;
-      transition: all 0.3s;
-    }
-    .contact-chip:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-
-    /* ── FOOTER ── */
-    footer {
-      position: relative; z-index: 1;
-      text-align: center; padding: 2rem;
-      color: var(--muted); font-size: 0.8rem;
-      border-top: 1px solid rgba(255,255,255,0.04);
-    }
-    footer span { color: var(--accent); }
-
-    /* ── DIVIDER LINE ── */
-    .divider {
-      width: 80px; height: 2px;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
-      border-radius: 100px; margin-bottom: 2rem;
-    }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp   { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
-
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.7s ease; }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
-      .avatar-placeholder { max-width: 280px; margin: 0 auto; }
-      .section-inner { padding: 5rem 1.5rem; }
-    }
-     </style>
-
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Muhammad Ali Hassan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div id="stars"></div>
 
-<!-- NAV -->
 <nav>
-  <div class="nav-logo">MAH</div>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#goals">Goals</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+    <div class="nav-logo">MAH</div>
+    
+    <button class="hamburger" id="hamburger-btn" aria-label="Toggle navigation">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <ul class="nav-links" id="nav-links">
+        <li><a href="#heroo">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#goals">Goals</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <h1 class="hero-name">
-    <span class="line1">Muhammad Ali</span>
-    <span class="line2">Hassan</span>
-  </h1>
-  <p class="hero-title">Pakistan</p>
-  <div class="hero-cta">
-    <button onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})" class="btn btn-primary">Discover More</button>
-    <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="btn btn-outline">Get in Touch</button>
-  </div>
-  <div class="scroll-hint">
-    <div class="scroll-line"></div>
-    Scroll
-  </div>
+<section class="hero" id="heroo">
+    <h1 class="hero-name">
+        <span class="line1">Muhammad Ali</span>
+        <span class="line2">Hassan</span>
+    </h1>
+    <p class="hero-title">Pakistan</p>
+    <div class="hero-cta">
+        <button onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})" class="btn btn-primary">Discover More</button>
+        <button onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="btn btn-outline">Get in Touch</button>
+    </div>
+    <div class="scroll-hint">
+        <div class="scroll-line"></div>
+        Scroll
+    </div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
-  <div class="section-inner">
-    <div class="about-grid">
-      <div class="about-img-wrap reveal">
-        <div class="avatar-placeholder">
-          <div class="avatar-glow"></div>
-          <div class="avatar-initials">MAH</div>
-          <div class="avatar-name-small">Muhammad Ali Hassan</div>
+    <div class="section-inner">
+        <div class="about-grid">
+            <div class="about-img-wrap reveal">
+                <div class="avatar-placeholder">
+                    <div class="avatar-glow"></div>
+                    <div class="avatar-initials">MAH</div>
+                    <div class="avatar-name-small">Muhammad Ali Hassan</div>
+                </div>
+            </div>
+            <div class="about-text reveal">
+                <p class="section-label">About Me</p>
+                <h2 class="section-title">Muhammad Ali<br/>Hassan</h2>
+                <div class="divider"></div>
+                <p>
+                    Assalam-o-Alaikum! I'm <strong>Muhammad Ali Hassan</strong>, a dedicated and passionate individual from Pakistan. I believe in hard work, discipline, and always striving to be the best version of myself.
+                </p>
+                <p>
+                    My goal is to make a meaningful difference in the world. With determination and a positive mindset, I face every challenge as an opportunity to grow.
+                </p>
+            </div>
         </div>
-      </div>
-      <div class="about-text reveal">
-        <p class="section-label">About Me</p>
-        <h2 class="section-title">Muhammad Ali<br/>Hassan</h2>
-        <div class="divider"></div>
-        <p>
-          Assalam-o-Alaikum! I'm <strong>Muhammad Ali Hassan</strong>, a dedicated and passionate individual from Pakistan. I believe in hard work, discipline, and always striving to be the best version of myself.
-        </p>
-        <p>
-          My goal is to make a meaningful difference in the world. With determination and a positive mindset, I face every challenge as an opportunity to grow.
-        </p>
-      </div>
     </div>
-  </div>
 </section>
 
-<!-- GOALS -->
 <section id="goals">
-  <div class="section-inner">
-    <div class="reveal" style="margin-bottom:3rem;">
-      <p class="section-label">Future Plans</p>
-      <h2 class="section-title">My Goals</h2>
-      <div class="divider"></div>
+    <div class="section-inner">
+        <div class="reveal" style="margin-bottom:3rem;">
+            <p class="section-label">Future Plans</p>
+            <h2 class="section-title">My Goals</h2>
+            <div class="divider"></div>
+        </div>
+        <ul class="goals-list">
+            <li class="reveal">
+                <span class="goal-num">01</span>
+                <div class="goal-text">
+                    <strong>Personal Growth</strong>
+                    <span>Continuously improving myself through learning new skills, gaining knowledge, and expanding my horizons.</span>
+                </div>
+            </li>
+            <li class="reveal">
+                <span class="goal-num">02</span>
+                <div class="goal-text">
+                    <strong>Achieve Success</strong>
+                    <span>Working hard every single day to reach my goals and build a bright future for myself and my family.</span>
+                </div>
+            </li>
+            <li class="reveal">
+                <span class="goal-num">03</span>
+                <div class="goal-text">
+                    <strong>Make an Impact</strong>
+                    <span>Using my abilities and passion to contribute positively to my community and the people around me.</span>
+                </div>
+            </li>
+            <li class="reveal">
+                <span class="goal-num">04</span>
+                <div class="goal-text">
+                    <strong>Serve Humanity</strong>
+                    <span>Living a life of purpose — giving back, staying humble, and making a meaningful difference in the world.</span>
+                </div>
+            </li>
+        </ul>
     </div>
-    <ul class="goals-list">
-      <li class="reveal">
-        <span class="goal-num">01</span>
-        <div class="goal-text">
-          <strong>Personal Growth</strong>
-          <span>Continuously improving myself through learning new skills, gaining knowledge, and expanding my horizons.</span>
-        </div>
-      </li>
-      <li class="reveal">
-        <span class="goal-num">02</span>
-        <div class="goal-text">
-          <strong>Achieve Success</strong>
-          <span>Working hard every single day to reach my goals and build a bright future for myself and my family.</span>
-        </div>
-      </li>
-      <li class="reveal">
-        <span class="goal-num">03</span>
-        <div class="goal-text">
-          <strong>Make an Impact</strong>
-          <span>Using my abilities and passion to contribute positively to my community and the people around me.</span>
-        </div>
-      </li>
-      <li class="reveal">
-        <span class="goal-num">04</span>
-        <div class="goal-text">
-          <strong>Serve Humanity</strong>
-          <span>Living a life of purpose — giving back, staying humble, and making a meaningful difference in the world.</span>
-        </div>
-      </li>
-    </ul>
-  </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
-  <div class="section-inner">
-    <div class="contact-wrap reveal">
-      <p class="section-label">Get In Touch</p>
-      <h2 class="section-title">Let's Connect</h2>
-      <div class="divider" style="margin:0 auto 2rem;"></div>
-      <p>Whether you want to connect, collaborate, or just say Salam — I'd love to hear from you!</p>
-      <div class="contact-links">
-        <a href="mailto:muh.alihassan.pk@gmail.com" class="contact-chip">
-  📧 muh.alihassan.pk@gmail.com
-</a>
-        <a href="https://www.linkedin.com/in/muhammad-ali-hassan-54931a3a8" target="_blank" class="contact-chip">💼 LinkedIn</a>
-        <a href="https://wa.me/923281868087" target="_blank" class="contact-chip">📱 WhatsApp</a>
-      </div>
+    <div class="section-inner">
+        <div class="contact-wrap reveal">
+            <p class="section-label">Get In Touch</p>
+            <h2 class="section-title">Let's Connect</h2>
+            <div class="divider" style="margin:0 auto 2rem;"></div>
+            <p>Whether you want to connect, collaborate, or just say Salam — I'd love to hear from you!</p>
+            <div class="contact-links">
+                <a href="mailto:muh.alihassan.pk@gmail.com" class="contact-chip">📧 muh.alihassan.pk@gmail.com</a>
+                <a href="https://www.linkedin.com/in/muhammad-ali-hassan-54931a3a8" target="_blank" class="contact-chip">💼 LinkedIn</a>
+                <a href="https://wa.me/923281868087" target="_blank" class="contact-chip">📱 WhatsApp</a>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
-  Designed with ❤️ for <span>Muhammad Ali Hassan</span> &nbsp;·&nbsp; Pakistan
+    Designed with ❤️ for <span>Muhammad Ali Hassan</span> &nbsp;·&nbsp; Pakistan
 </footer>
 
-<script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('visible'), i * 80);
-      }
-    });
-  }, { threshold: 0.12 });
-  reveals.forEach(el => observer.observe(el));
-
-  // Smooth active nav highlight
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav-links a');
-  window.addEventListener('scroll', () => {
-    let current = '';
-    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
-    navLinks.forEach(a => {
-      a.style.color = a.getAttribute('href') === '#' + current ? 'var(--accent)' : '';
-    });
-  });
-</script>
+<script src="script.js"></script>
 </body>
 </html>
